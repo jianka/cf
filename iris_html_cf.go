@@ -108,6 +108,13 @@ func Compare(a interface{}, b interface{}) bool {
 	return aInt == bInt
 }
 
+// 比较字符串
+func EqStr(a interface{}, b interface{}) bool {
+	aInt := cast.ToString(a)
+	bInt := cast.ToString(b)
+	return aInt == bInt
+}
+
 // 大于
 func Gt(a interface{}, b interface{}) bool {
 	aInt := cast.ToInt64(a)
