@@ -53,6 +53,15 @@ func GetInt32(name string, value map[string][]string) (int32, error) {
 	return 0, errors.New("参数不存在")
 }
 
+// 参数解析 int
+func GetInt(name string, value map[string][]string) (int, error) {
+	if v := value[name]; len(v) > 0 {
+		n, err := strconv.ParseInt(v[0], 10, 32)
+		return int(n), err
+	}
+	return 0, errors.New("参数不存在")
+}
+
 // 参数解析 uint8
 func GetUint8(name string, value map[string][]string) (uint8, error) {
 	if v := value[name]; len(v) > 0 {
