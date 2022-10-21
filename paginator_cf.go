@@ -22,13 +22,18 @@ func PaginatorData(totalCount int64, page int, pageSize int, url string, param .
 		return ""
 	}
 	// 初始化数据
-	params := ""
+	params := "?"
 	if len(param) == 1 {
-		str := "?"
+		str := ""
 		for k, v := range param[0] {
 			str += k + "=" + cast.ToString(v) + "&"
 		}
 		params = SubStrLast(str)
+	}
+	if params == "?" {
+		params += "page="
+	} else {
+		params += "&page="
 	}
 	// 页面地址加参数
 	urlParam := url + params
@@ -60,7 +65,7 @@ func PaginatorData(totalCount int64, page int, pageSize int, url string, param .
 			hasLess = true
 		}
 		// 上一页
-		GetPreviousButton(&htmlSlice, urlParam+"&page="+cast.ToString(currentPage-1), hasLess)
+		GetPreviousButton(&htmlSlice, urlParam+cast.ToString(currentPage-1), hasLess)
 		// 组装数据
 		if lastPage <= 10 {
 			// 页数小于10 一次性显示全
@@ -75,7 +80,7 @@ func PaginatorData(totalCount int64, page int, pageSize int, url string, param .
 					pageSlice = append(pageSlice, map[string]string{
 						"index": cast.ToString(i),
 						"state": "click", //click active disabled
-						"url":   urlParam + "&page=" + cast.ToString(i),
+						"url":   urlParam + cast.ToString(i),
 					})
 				}
 			}
@@ -147,7 +152,7 @@ func PaginatorData(totalCount int64, page int, pageSize int, url string, param .
 						pageSlice = append(pageSlice, map[string]string{
 							"index": cast.ToString(i),
 							"state": "click", //click active disabled
-							"url":   urlParam + "&page=" + cast.ToString(i),
+							"url":   urlParam + cast.ToString(i),
 						})
 					}
 				} else {
@@ -161,7 +166,7 @@ func PaginatorData(totalCount int64, page int, pageSize int, url string, param .
 		}
 		GetPageButton(&htmlSlice, pageSlice)
 		// 下一页
-		GetNextButton(&htmlSlice, urlParam+"&page="+cast.ToString(currentPage+1), hasMore)
+		GetNextButton(&htmlSlice, urlParam+cast.ToString(currentPage+1), hasMore)
 		GetTotalCount(&htmlSlice, total)
 	}
 	return render(htmlSlice, total)
