@@ -129,3 +129,9 @@ func StatusForSpanText2(i interface{}, s ...[]string) string {
 	}
 	return ret
 }
+
+// 检测字符串是否为数字
+func IsNumeric(s string) bool {
+	n := CountWords(s, 1, "numberCount")
+	return len(s) == int(n)
+}
