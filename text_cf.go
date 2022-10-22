@@ -33,6 +33,15 @@ func SubStrLast2(s string) string {
 	return s
 }
 
+// 如果最后一个字符串是"/"的话 返回原字符串，如果不是补位 /
+func SubStrComplement(s string) string {
+	bt := []rune(s)
+	if string(bt[len(bt)-1]) == "/" {
+		return s
+	}
+	return s + "/"
+}
+
 // 超出范围的字符串显示...
 func SubStrShow(s string, i int) string {
 	arr := []rune(s)

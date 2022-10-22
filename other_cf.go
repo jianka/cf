@@ -149,3 +149,20 @@ func MtRandStr(length int) string {
 	}
 	return code
 }
+
+// 转换驼峰为蛇形
+func CamelToSnake(value string) string {
+	values := []byte(value)
+	var results string
+
+	for i := 0; i < len(values); i++ {
+		if 'A' <= values[i] && values[i] <= 'Z' {
+			values[i] = values[i] - 'A' + 'a'
+			if i != 0 {
+				results += "_"
+			}
+		}
+		results += string(values[i])
+	}
+	return results
+}
