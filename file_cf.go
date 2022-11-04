@@ -59,32 +59,35 @@ func FileSize(path string) int64 {
 // data 数据
 // concise 是否记录时间 false 纯记录数据
 // nameRule 名字规则 1 记录全部日志 2 按天分割日志 3 按小时分割日志
-func RunLog(dir, fileName string, data interface{}, concise bool, nameRule int) {
-	file := ""
-	// 处理文件名
-	if nameRule == 1 {
-		file = CamelToSnake(fileName) + ".txt"
-	} else if nameRule == 2 {
-		file = CamelToSnake(fileName) + "-" + time.Now().Format("20060102") + ".txt"
-	} else if nameRule == 3 {
-		file = CamelToSnake(fileName) + "-" + time.Now().Format("20060102 15") + ".txt"
+// confirm 是否执行记录 默认记录
+func RunLog(dir, fileName string, data interface{}, concise bool, nameRule int, confirm ...bool) {
+	if len(confirm) != 1 || !confirm[0] {
+		file := ""
+		// 处理文件名
+		if nameRule == 1 {
+			file = CamelToSnake(fileName) + ".txt"
+		} else if nameRule == 2 {
+			file = CamelToSnake(fileName) + "-" + time.Now().Format("20060102") + ".txt"
+		} else if nameRule == 3 {
+			file = CamelToSnake(fileName) + "-" + time.Now().Format("20060102 15") + ".txt"
+		}
+		// 处理数据
+		var txt string
+		jsonData, err := json.Marshal(data)
+		if err != nil {
+			txt = cast.ToString(data)
+		} else {
+			txt = string(jsonData)
+		}
+		// 记录时间
+		if concise {
+			txt = time.Now().String() + "\n" + txt
+		}
+		f, err := os.OpenFile(SubStrComplement(dir)+file, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0775)
+		if err != nil {
+			return
+		}
+		defer f.Close()
+		f.WriteString(txt + "\n")
 	}
-	// 处理数据
-	var txt string
-	jsonData, err := json.Marshal(data)
-	if err != nil {
-		txt = cast.ToString(data)
-	} else {
-		txt = string(jsonData)
-	}
-	// 记录时间
-	if concise {
-		txt = time.Now().String() + "\n" + txt
-	}
-	f, err := os.OpenFile(SubStrComplement(dir)+file, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0775)
-	if err != nil {
-		return
-	}
-	defer f.Close()
-	f.WriteString(txt + "\n")
 }
