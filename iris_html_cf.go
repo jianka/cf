@@ -139,3 +139,8 @@ func Gt(a interface{}, b interface{}) bool {
 	bInt := cast.ToInt64(b)
 	return aInt == bInt
 }
+
+// bool值判断
+func EqBool(a interface{}) bool {
+	return cast.ToBool(a)
+}
