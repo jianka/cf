@@ -61,7 +61,7 @@ func FileSize(path string) int64 {
 // nameRule 名字规则 1 记录全部日志 2 按天分割日志 3 按小时分割日志
 // confirm 是否执行记录 默认记录
 func RunLog(dir, fileName string, data interface{}, concise bool, nameRule int, confirm ...bool) {
-	if len(confirm) != 1 || !confirm[0] {
+	if len(confirm) == 1 && confirm[0] {
 		file := ""
 		// 处理文件名
 		if nameRule == 1 {
