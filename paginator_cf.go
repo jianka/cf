@@ -29,7 +29,7 @@ func PaginatorData(totalCount int64, page int, pageSize int, url string, param .
 			str += k + "=" + cast.ToString(v) + "&"
 		}
 		if str != "" {
-			params = SubStrLast(str)
+			params = "?" + SubStrLast(str)
 		}
 	}
 	if params == "?" {
