@@ -55,4 +55,6 @@ func GetDayString(t ...string) string {
 
 // 返回加秒的时间
 func AddSecondDate(s int) time.Time {
-	timeobj := time.Now().Add(time.Second * time.Durati
+	timeobj := time.Now().Add(time.Second * time.Duration(s))
+	return timeobj
+}
