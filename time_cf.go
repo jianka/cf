@@ -58,3 +58,9 @@ func AddSecondDate(s int) time.Time {
 	timeobj := time.Now().Add(time.Second * time.Duration(s))
 	return timeobj
 }
+
+// 返回减秒的时间
+func SubSecondDate(s int) time.Time {
+	timeobj := time.Now().Add(-(time.Second * time.Duration(s)))
+	return timeobj
+}
