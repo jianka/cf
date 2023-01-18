@@ -39,6 +39,34 @@ func TransTime(t interface{}, types int) string {
 	return ret
 }
 
+// 格式化时间
+// t 时间类型
+// types 格式 默认 1
+// 1 2006-01-02 15:04:05
+// 2 2006/01/02 15:04:05
+// 3 2006年01月02日 15点04分05秒
+// 4 2006-01-02
+// 5 2006/01/02
+// 6 2006年01月02日
+func TimeFormat(t time.Time, types int) string {
+	layout := "2006-01-02 15:04:05"
+	switch types {
+	case 2:
+		layout = "2006/01/02 15:04:05"
+	case 3:
+		layout = "2006年01月02日 15点04分05秒"
+	case 4:
+		layout = "2006-01-02"
+	case 5:
+		layout = "2006/01/02"
+	case 6:
+		layout = "2006年01月02日"
+	case 7:
+		layout = "2006-01-02-15-04-05"
+	}
+	return t.Format(layout)
+}
+
 func TransTimetamp(t string) uint32 {
 	times, _ := time.Parse("2006-01-02 15:04:05", t)
 	return uint32(times.Unix())
