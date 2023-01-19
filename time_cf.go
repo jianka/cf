@@ -68,7 +68,7 @@ func TimeFormat(t time.Time, types int) string {
 }
 
 func TransTimetamp(t string) uint32 {
-	times, _ := time.Parse("2006-01-02 15:04:05", t)
+	times, _ := time.ParseInLocation("2006-01-02 15:04:05", t, time.Local)
 	return uint32(times.Unix())
 }
 
