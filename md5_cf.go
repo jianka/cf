@@ -26,5 +26,5 @@ func GetFileMD5(pathName string) (string, error) {
 	if _, err := io.Copy(md5hash, f); err != nil {
 		return "", err
 	}
-	return string(md5hash.Sum(nil)), nil
+	return string(hex.EncodeToString(md5hash.Sum(nil))), nil
 }
