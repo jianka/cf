@@ -144,7 +144,7 @@ func EqStr(a interface{}, b interface{}) bool {
 func Gt(a interface{}, b interface{}) bool {
 	aInt := cast.ToInt64(a)
 	bInt := cast.ToInt64(b)
-	return aInt == bInt
+	return aInt > bInt
 }
 
 // bool值判断
