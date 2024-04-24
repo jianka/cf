@@ -171,7 +171,7 @@ func PaginatorData(totalCount int64, page int, pageSize int, url string, param .
 		GetNextButton(&htmlSlice, urlParam+cast.ToString(currentPage+1), hasMore)
 		GetTotalCount(&htmlSlice, total)
 	}
-	return render(htmlSlice, total)
+	return render(htmlSlice)
 }
 
 // 生成一个可点击的按钮
@@ -235,7 +235,7 @@ func GetTotalCount(s *[]string, i int64) {
 }
 
 // 渲染分页html
-func render(s []string, i int64) string {
+func render(s []string) string {
 	str := `<ul class="pagination">`
 	for _, v := range s {
 		str += v

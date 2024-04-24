@@ -92,3 +92,16 @@ func SubSecondDate(s int) time.Time {
 	timeobj := time.Now().Add(-(time.Second * time.Duration(s)))
 	return timeobj
 }
+
+// 解析时间
+// 时间 2023-10-15 20:07:19 -0700 -0700 Sun, 15 Oct 2023 20:07:19 -0700
+// s := "Sun, 15 Oct 2023 20:07:19 -0700"
+// t, err := time.Parse("Mon, 02 Jan 2006 15:04:05 -0700", s)
+// log.Println(t)
+// log.Println(t.Unix())
+// 2024-03-29T07:00:00Z
+// "2006/01/02 15:04:05"
+func ParsingTime(str string) (time.Time, error) {
+	t, err := time.Parse("2006-01-02T15:04:05Z", str)
+	return t, err
+}

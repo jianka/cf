@@ -4,6 +4,7 @@ package cf
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/jianka/cf/cast"
@@ -143,4 +144,74 @@ func StatusForSpanText2(i interface{}, s ...[]string) string {
 func IsNumeric(s string) bool {
 	n := CountWords(s, 1, "numberCount")
 	return len(s) == int(n)
+}
+
+// 取两个字符串之间值
+func ExtractBetween(s, start, end string) string {
+	// 找到开始字符串的位置
+	startIndex := strings.Index(s, start)
+	if startIndex == -1 {
+		return ""
+	}
+	// 找到开始字符串之后的结束字符串的位置
+	endStr := s[startIndex+len(start):]
+	endIndex := strings.Index(endStr, end)
+	if endIndex == -1 {
+		return ""
+	}
+	endIndex += startIndex + len(start)
+	// 取得开始和结束字符串之间的内容
+	return s[startIndex+len(start) : endIndex]
+}
+
+// 判断字符串是否存在 多个值
+func CheckStrExists(str string, s ...string) bool {
+	if len(s) > 0 {
+		for _, v := range s {
+			if strings.Contains(str, v) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+/*
+正则批量取文本中间
+text 源文本
+left 左标识文本
+right 右标识文本
+isleft 是否不带左边标识 默认带
+isright 是否不带右边标识 默认带
+*/
+func RegexFindAll(text, left, right string, isleft, isright bool) []string {
+	// 正则表达式
+	regexPattern := left + `([\s\S]*?)` + right
+	// 编译正则表达式
+	regex, err := regexp.Compile(regexPattern)
+	if err != nil {
+		return []string{}
+	}
+	arr := regex.FindAllString(text, -1)
+	if isleft {
+		for k := range arr {
+			arr[k] = strings.Replace(arr[k], left, "", 1)
+		}
+	}
+	if isright {
+		for k := range arr {
+			arr[k] = strings.Replace(arr[k], right, "", 1)
+		}
+	}
+	// 查找所有匹配项
+	return arr
+}
+
+// 删除多余字符 空格 空行 制表符
+func DeleteExtraCharacters(str string) string {
+	// 正则表达式
+	regexPattern := `\s+`
+	// 编译正则表达式
+	re := regexp.MustCompile(regexPattern)
+	return re.ReplaceAllString(str, "")
 }
